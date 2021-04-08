@@ -3,6 +3,7 @@ package com.example.pinview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
@@ -13,12 +14,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
 @ExperimentalComposeUiApi
 @Composable
-fun PinView2(count: Int) {
+fun PinView2(count: Int, keyboardType : KeyboardType = KeyboardType.NumberPassword) {
     var textState by remember {
         mutableStateOf(
             TextFieldValue(
@@ -44,6 +47,7 @@ fun PinView2(count: Int) {
     }
     Row(Modifier.alpha(0.5f)) {
         TextField(
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             value = textState,
             onValueChange = {
                 if (it.text.trim().length == count){
@@ -61,7 +65,8 @@ fun PinView2(count: Int) {
                     }
                 }
                 previewText = te.text.trim()
-                textState = te.copy(text = te.text.trim().take(count))
+                val newText = te.text.trim().take(count)
+                textState = te.copy(text = newText, selection = TextRange(newText.length))
             },
             modifier = Modifier
                 .fillMaxSize()
