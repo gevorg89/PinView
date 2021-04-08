@@ -1,10 +1,9 @@
 package com.example.pinview
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -12,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,7 +19,12 @@ import androidx.compose.ui.unit.dp
 
 @ExperimentalComposeUiApi
 @Composable
-fun PinView2(count: Int, keyboardType : KeyboardType = KeyboardType.NumberPassword) {
+fun PinView2(
+    count: Int,
+    empty: @Composable () -> Unit,
+    filled: @Composable () -> Unit,
+    keyboardType: KeyboardType = KeyboardType.NumberPassword
+) {
     var textState by remember {
         mutableStateOf(
             TextFieldValue(
@@ -31,42 +34,27 @@ fun PinView2(count: Int, keyboardType : KeyboardType = KeyboardType.NumberPasswo
     }
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = FocusRequester()
-    var previewText = textState.text
-    Row(Modifier.padding(top = 0.dp)) {
-        repeat(textState.text.length) { position ->
-            Filled() {
-                //textState = textState.copy(selection = TextRange(position))
-            }
+    Row(
+        Modifier
+            .padding(top = 0.dp)
+    ) {
+        repeat(textState.text.length) {
+            filled()
         }
-        repeat(count - textState.text.length) { position ->
-            val calcPosition = textState.text.length + position
-            Empty {
-                //textState = textState.copy(selection = TextRange(calcPosition))
-            }
+        repeat(count - textState.text.length) {
+            empty()
         }
     }
-    Row(Modifier.alpha(0.5f)) {
+    Row(Modifier.alpha(0.0f)) {
         TextField(
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             value = textState,
-            onValueChange = {
-                if (it.text.trim().length == count){
-                    //keyboardController?.hideSoftwareKeyboard()
+            onValueChange = { newTextState ->
+                if (newTextState.text.trim().length == count && textState.text.length == count - 1) {
+                    keyboardController?.hideSoftwareKeyboard()
                 }
-                val te = when {
-                    it.text.trim().length > previewText.trim().length -> {
-                        it.copy(text = previewText + (it.text.lastOrNull() ?: ""))
-                    }
-                    it.text.trim().length < previewText.trim().length -> {
-                        it.copy(text = previewText.dropLast(1))
-                    }
-                    else -> {
-                        it
-                    }
-                }
-                previewText = te.text.trim()
-                val newText = te.text.trim().take(count)
-                textState = te.copy(text = newText, selection = TextRange(newText.length))
+                val newText = newTextState.text.trim().take(count)
+                textState = newTextState.copy(text = newText, selection = TextRange(newText.length))
             },
             modifier = Modifier
                 .fillMaxSize()
@@ -76,32 +64,5 @@ fun PinView2(count: Int, keyboardType : KeyboardType = KeyboardType.NumberPasswo
     DisposableEffect({ }) {
         focusRequester.requestFocus()
         onDispose { }
-    }
-}
-
-@Composable
-private fun Empty(onClick: () -> Unit) {
-    Square(content = {  }, color = Color.Gray) {
-
-    }
-}
-
-@Composable
-private fun Filled(onClick: () -> Unit) {
-    Square(content = { Text(text = "*", Modifier.fillMaxSize()) }, color = Color.Cyan) {
-
-    }
-}
-
-@Composable
-private fun Square(content: @Composable () -> Unit, color: Color, onClick: () -> Unit) {
-    Box(
-        Modifier
-            .padding(16.dp)
-            .background(color)
-            .width(75.dp)
-            .height(48.dp)
-    ) {
-        content.invoke()
     }
 }
