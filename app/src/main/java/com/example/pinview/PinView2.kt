@@ -1,8 +1,11 @@
 package com.example.pinview
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
@@ -11,15 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.input.VisualTransformation
 
 @ExperimentalComposeUiApi
 @Composable
 fun PinView2(
+    modifier: Modifier = Modifier,
     count: Int,
     empty: @Composable () -> Unit,
     filled: @Composable () -> Unit,
@@ -34,18 +40,8 @@ fun PinView2(
     }
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = FocusRequester()
-    Row(
-        Modifier
-            .padding(top = 0.dp)
-    ) {
-        repeat(textState.text.length) {
-            filled()
-        }
-        repeat(count - textState.text.length) {
-            empty()
-        }
-    }
-    Row(Modifier.alpha(0.0f)) {
+    Box(
+        Modifier.background(Color.Transparent)) {
         TextField(
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             value = textState,
@@ -56,11 +52,25 @@ fun PinView2(
                 val newText = newTextState.text.trim().take(count)
                 textState = newTextState.copy(text = newText, selection = TextRange(newText.length))
             },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
-                .fillMaxSize()
+                .matchParentSize()
+                .alpha(0.5f)
                 .focusRequester(focusRequester)
         )
+        Row() {
+            repeat(textState.text.length) {
+                filled()
+            }
+            repeat(count - textState.text.length) {
+                empty()
+            }
+        }
+
+
     }
+
+
     DisposableEffect({ }) {
         focusRequester.requestFocus()
         onDispose { }

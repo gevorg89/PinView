@@ -41,7 +41,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     PinViewTheme {
-        PinView2(count = 4, empty = { EmptyCircle() }, filled = { FilledCircle() })
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(top = 32.dp)
+                .fillMaxWidth()
+        ) {
+            PinView2(
+                count = 4,
+                empty = { EmptyCircle() },
+                filled = { FilledCircle() })
+        }
     }
 }
 
@@ -58,7 +69,7 @@ private fun FilledCircle() {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             Text(text = "*", fontSize = 32.sp)
         }
     }, color = Color.Cyan)
