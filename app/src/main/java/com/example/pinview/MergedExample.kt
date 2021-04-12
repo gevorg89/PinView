@@ -60,6 +60,11 @@ private fun Block(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .border(
+                start = Border(2.dp, Color.Red),
+                bottom = Border(2.dp, Color.Red),
+                top = Border(2.dp, Color.Red)
+            )
+            /*.border(
                 color = color,
                 width = 2.dp,
                 shape = when (position) {
@@ -68,6 +73,11 @@ private fun Block(
                     else -> RoundedCornerShape(0.dp)
                 }
             )
+            .border(
+                if (position == 0){
+
+                }
+            )*/
             .size(44.dp)
     ) {
         content.invoke()
