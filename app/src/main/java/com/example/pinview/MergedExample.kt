@@ -31,9 +31,7 @@ fun MergedPreview() {
             },
             filled = { _: Char, position: Int ->
                 FilledDash(position)
-            }) { pinData ->
-
-        }
+            }) { }
     }
 }
 
