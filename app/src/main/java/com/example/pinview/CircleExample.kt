@@ -38,7 +38,7 @@ fun CirclePreview() {
         PinView(
             count = 6,
             empty = { EmptyCircle() },
-            filled = { FilledCircle() }) { pinData ->
+            filled = { _: Char, _: Int -> FilledCircle() }) { pinData ->
             pinDataState = pinData
         }
     }

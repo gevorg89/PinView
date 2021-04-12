@@ -19,7 +19,10 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Column {
                         //CirclePreview()
-                        SquarePreview()
+                        //SquarePreview()
+                        //DashCenterPreview()
+                        //DashBottomPreview()
+                        MergedPreview()
                     }
                 }
             }

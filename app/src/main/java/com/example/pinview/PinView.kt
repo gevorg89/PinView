@@ -27,8 +27,8 @@ data class PinData(
 @Composable
 fun PinView(
     count: Int,
-    empty: @Composable () -> Unit,
-    filled: @Composable () -> Unit,
+    empty: @Composable (Int) -> Unit,
+    filled: @Composable (Char, Int) -> Unit,
     keyboardType: KeyboardType = KeyboardType.NumberPassword,
     onChange: (PinData) -> Unit
 ) {
@@ -70,11 +70,11 @@ fun PinView(
                     keyboardController?.showSoftwareKeyboard()
                 }
             )) {
-            repeat(textState.text.length) {
-                filled()
+            repeat(textState.text.length) { position ->
+                filled(textState.text.last(), position)
             }
-            repeat(count - textState.text.length) {
-                empty()
+            repeat(count - textState.text.length) { position ->
+                empty(position + textState.text.length)
             }
         }
     }

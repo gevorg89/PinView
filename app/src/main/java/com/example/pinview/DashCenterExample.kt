@@ -1,14 +1,17 @@
 package com.example.pinview
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -16,7 +19,7 @@ import androidx.compose.ui.unit.sp
 @ExperimentalComposeUiApi
 @Preview(showBackground = false)
 @Composable
-fun SquarePreview() {
+fun DashCenterPreview() {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -27,31 +30,34 @@ fun SquarePreview() {
         PinView(
             count = 4,
             empty = { EmptyDash() },
-            filled = { _: Char, _: Int -> FilledDash() }) { pinData ->
-
+            filled = { char: Char, _: Int ->
+                FilledDash(char)
+            }) {
         }
     }
 }
 
 @Composable
 private fun EmptyDash() {
-    Block(content = { }, color = Color.Gray)
-}
-
-@Composable
-private fun FilledDash() {
     Block(content = {
-        Text(text = "*", fontSize = 24.sp)
-    }, color = Color.Blue)
+        Divider(color = Color.Black, thickness = 2.dp)
+    })
 }
 
 @Composable
-private fun Block(content: @Composable () -> Unit, color: Color) {
+private fun FilledDash(char: Char) {
+    val text by remember { mutableStateOf(char) }
+    Block(content = {
+        Text(text = text.toString(), fontSize = 36.sp, textAlign = TextAlign.Center)
+    })
+}
+
+@Composable
+private fun Block(content: @Composable () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .padding(8.dp)
-            .border(color = color, width = 2.dp, shape = RoundedCornerShape(8.dp))
             .size(44.dp)
     ) {
         content.invoke()
