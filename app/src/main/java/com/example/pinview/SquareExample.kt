@@ -28,7 +28,6 @@ fun SquarePreview() {
             count = 4,
             empty = { EmptyDash() },
             filled = { _: Char, _: Int -> FilledDash() }) { pinData ->
-
         }
     }
 }

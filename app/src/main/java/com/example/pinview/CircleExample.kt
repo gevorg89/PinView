@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @ExperimentalComposeUiApi
 @Preview(showBackground = false)
@@ -33,16 +34,16 @@ fun CirclePreview() {
                 "Your code:${pinDataState.text}, complete:${pinDataState.complete}"
             } else {
                 "complete:${pinDataState.complete}"
-            }
+            }, fontSize = 17.sp
         )
         PinView(
-            count = 6,
+            modifier = Modifier.padding(top = 16.dp),
+            count = 5,
             empty = { EmptyCircle() },
             filled = { _: Char, _: Int -> FilledCircle() }) { pinData ->
             pinDataState = pinData
         }
     }
-
 }
 
 
@@ -53,31 +54,32 @@ private fun EmptyCircle() {
 
 @Composable
 private fun FilledCircle() {
-    var animationInc by remember { mutableStateOf(1f) }
-    val animationIncState by animateFloatAsState(
-        targetValue = animationInc,
+    var animationValue by remember { mutableStateOf(1f) }
+    val animationState by animateFloatAsState(
+        targetValue = animationValue,
         animationSpec = tween(durationMillis = 100),
         finishedListener = {
-            animationInc = 1f
+            animationValue = 1f
         }
     )
     Circle(
         content = {},
         color = Color.Cyan,
-        modifier = Modifier.scale(animationIncState)
+        modifier = Modifier.scale(animationState)
     )
     DisposableEffect(Unit) {
-        animationInc = 1.5f
+        animationValue = 1.5f
         onDispose {
 
         }
     }
 }
 
-
 @Composable
 private fun Circle(content: @Composable () -> Unit, color: Color, modifier: Modifier = Modifier) {
     Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .size(32.dp)
     ) {
@@ -86,7 +88,6 @@ private fun Circle(content: @Composable () -> Unit, color: Color, modifier: Modi
                 .size(16.dp)
                 .clip(CircleShape)
                 .background(color)
-
         ) {
             content.invoke()
         }

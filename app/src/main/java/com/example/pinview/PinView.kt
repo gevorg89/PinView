@@ -26,6 +26,7 @@ data class PinData(
 @ExperimentalComposeUiApi
 @Composable
 fun PinView(
+    modifier: Modifier = Modifier,
     count: Int,
     empty: @Composable (Int) -> Unit,
     filled: @Composable (Char, Int) -> Unit,
@@ -41,7 +42,7 @@ fun PinView(
     }
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = FocusRequester()
-    Box {
+    Box(modifier) {
         TextField(
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             value = textState,
