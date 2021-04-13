@@ -17,10 +17,10 @@ class MainActivity : ComponentActivity() {
             PinViewTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     Column() {
-                        CirclePreview()
-                        SquarePreview()
-                        DashCenterPreview()
-                        DashBottomPreview()
+//                        CirclePreview()
+//                        SquarePreview()
+//                        DashCenterPreview()
+//                        DashBottomPreview()
                         MergedPreview()
                     }
                 }

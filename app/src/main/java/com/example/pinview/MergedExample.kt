@@ -1,5 +1,6 @@
 package com.example.pinview
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,11 +75,34 @@ private fun Block(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .border(
-                start = if (position > 0) Border(2.dp, color) else null
-            )
+            .border(if (position > 0) BorderStroke(2.dp, color) else null)
             .size(44.dp)
     ) {
         content.invoke()
     }
+}
+
+fun Modifier.border(borderStroke: BorderStroke?) =
+    drawBehind {
+        borderStroke?.let {
+            drawStartBorder(stroke = borderStroke)
+        }
+    }
+
+private fun DrawScope.drawStartBorder(
+    stroke: BorderStroke
+) {
+    val strokeWidthPx = stroke.width.toPx()
+    if (strokeWidthPx == 0f) return
+    drawPath(
+        Path().apply {
+            moveTo(0f, 0f)
+            lineTo(strokeWidthPx, 0f)
+            val height = size.height
+            lineTo(strokeWidthPx, height)
+            lineTo(0f, height)
+            close()
+        },
+        brush = stroke.brush
+    )
 }
