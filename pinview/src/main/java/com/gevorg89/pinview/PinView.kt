@@ -1,4 +1,4 @@
-package com.example.pinview
+package com.gevorg89.pinview
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
