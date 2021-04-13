@@ -1,5 +1,5 @@
 # RatingBar for Jetpack Compose
-[![](https://jitpack.io/v/gevorg89/RatingBar.svg)](https://jitpack.io/#gevorg89/RatingBar)
+[![](https://jitpack.io/v/gevorg89/PinView.svg)](https://jitpack.io/#gevorg89/PinView)
 > PinView for Jetpack Compose!
 
 ### Implementation
