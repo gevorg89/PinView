@@ -38,7 +38,7 @@ fun MergedPreview() {
                 width = 2.dp,
                 shape = RoundedCornerShape(radius)
             ),
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Ascii,
             count = count,
             empty = { position: Int ->
                 EmptyDash(position)

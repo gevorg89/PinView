@@ -49,7 +49,9 @@ fun PinView(
             onValueChange = { newTextState ->
                 var isComplete = false
                 if (newTextState.text.trim().length >= count && textState.text.length >= count - 1) {
-                    keyboardController?.hideSoftwareKeyboard()
+                    if (newTextState.text != textState.text) {
+                        keyboardController?.hideSoftwareKeyboard()
+                    }
                     isComplete = true
                 }
                 val newText = newTextState.text.trim().take(count)
