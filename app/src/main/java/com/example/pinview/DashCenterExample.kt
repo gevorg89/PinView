@@ -40,7 +40,7 @@ fun DashCenterPreview() {
 @Composable
 private fun EmptyDash() {
     Block(content = {
-        Divider(color = Color.Black, thickness = 2.dp)
+        Divider(color = Color.Black, thickness = 2.dp, modifier = Modifier.padding(top = 6.dp))
     })
 }
 
