@@ -198,7 +198,7 @@ private fun Block(content: @Composable () -> Unit) {
 }
 ```
 ### Dash bottom pin
-![](images/dash_center_anim.gif)
+![](images/dash_bottom_anim.gif)
 ``` kotlin
 @ExperimentalComposeUiApi
 @Preview(showBackground = false)
