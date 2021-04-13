@@ -13,7 +13,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.gevorg89:pinview:LATEST_VERSION'
+    implementation 'com.github.gevorg89:PinView:LATEST_VERSION'
 }
 ```
 
