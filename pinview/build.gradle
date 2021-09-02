@@ -5,7 +5,7 @@ plugins {
 }
 group = 'com.github.gevorg89'
 ext {
-    compose_version = '1.0.0-rc02'
+    compose_version = '1.0.2'
 }
 
 android {
@@ -32,7 +32,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion = "1.5.10"
+        kotlinCompilerVersion = "1.5.21"
     }
 }
 

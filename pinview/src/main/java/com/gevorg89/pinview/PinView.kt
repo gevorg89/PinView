@@ -50,7 +50,7 @@ fun PinView(
                 var isComplete = false
                 if (newTextState.text.trim().length >= count && textState.text.length >= count - 1) {
                     if (newTextState.text != textState.text) {
-                        keyboardController?.hideSoftwareKeyboard()
+                        keyboardController?.hide()
                     }
                     isComplete = true
                 }
@@ -70,7 +70,7 @@ fun PinView(
                 indication = null,
                 onClick = {
                     focusRequester.requestFocus()
-                    keyboardController?.showSoftwareKeyboard()
+                    keyboardController?.show()
                 }
             )) {
             repeat(textState.text.length) { position ->
